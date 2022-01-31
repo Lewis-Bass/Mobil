@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobil.ViewModels"  
+             xmlns:model="clr-namespace:Mobil.Models" 
+             x:Class="Mobil.Views.FavoritesAddPage">
+    
+    <ContentPage.BindingContext>
+        <vm:FavoritesAddViewModel />
+    </ContentPage.BindingContext>
+
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddToFavoritesCommand}"  />
+    </ContentPage.ToolbarItems>-->
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75*"/>
+                    <ColumnDefinition Width="25*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Entry Grid.Column="0"  
+                       Placeholder="Search Name"
+                       Text="{Binding SearchFavorite}"
+                       Keyboard="Email" VerticalOptions="FillAndExpand" />
+                <Button Grid.Column="1"
+                        Text="Search" 
+                        Font="Large" 
+                        BorderWidth="1" 
+                        Command="{Binding SearchBindersCommand}"   
+                        HorizontalOptions="Center" 
+                        VerticalOptions="CenterAndExpand"                    
+                    />
+            </Grid>
+
+            <ScrollView>
+                <RefreshView x:DataType="vm:FavoritesAddViewModel" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                    <!--SelectionChangedCommand="{Binding BinderSelectionChanged}"-->
+                    <!--SelectionChanged="FavoriteListView_SelectionChanged"-->
+                    <CollectionView x:Name="FavoriteListView"
+                                    ItemsSource="{Binding BinderSearchResults}"                                                         
+                                    SelectionMode="Multiple">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout x:DataType="model:Binder" Padding="5,0,5,0">
+                                    
+                                    <Label Text="{Binding BinderName}" 
+                                       LineBreakMode="NoWrap" 
+                                       Style="{DynamicResource ListItemTextStyle}" 
+                                       FontSize="16" />
+                                </StackLayout>
+
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </RefreshView>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

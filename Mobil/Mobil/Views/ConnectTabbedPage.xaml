@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+            xmlns:vm="clr-namespace:Mobil.ViewModels"           
+            xmlns:model="clr-namespace:Mobil.Models"  
+            x:Class="Mobil.Views.ConnectTabbedPage">
+    <!--Pages can be added as references or inline-->
+    <ContentPage Title="Connections" x:Name="TabConnection">
+        <RefreshView x:DataType="vm:ConnectViewModel" Command="{Binding LoadAllConnectionsCommand}" 
+                     IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+
+            <CollectionView x:Name="ViewAllConnections"               
+                            ItemsSource="{Binding AllConnections}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10" x:DataType="model:ConnectionInformation">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="75*"/>
+                                    <ColumnDefinition Width="25*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding ConnectionName}" 
+                                   LineBreakMode="NoWrap" 
+                                   Style="{DynamicResource ListItemTextStyle}" 
+                                   FontSize="16" />
+                                <Button Grid.Column="1" HeightRequest="30"
+                                    Text="Delete" 
+                                    Font="10"
+                                    BorderWidth="0" 
+                                    HorizontalOptions="Start" 
+                                    VerticalOptions="CenterAndExpand"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConnectViewModel}}, Path=DeleteCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Grid>
+                            <Label Text="{Binding IPAddress}"
+                                   LineBreakMode="NoWrap"
+                                   Style="{DynamicResource ListItemDetailTextStyle}"
+                                   FontSize="13" />
+                            
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    NumberOfTapsRequired="1"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConnectViewModel}}, Path=ItemTapped}"		
+                                    CommandParameter="{Binding .}">
+                                </TapGestureRecognizer>                               
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </ContentPage>
+
+    <ContentPage Title="Add New" x:Name="TabAddUpdate" >
+        <ContentPage.BindingContext>
+            <vm:ConnectViewModel />
+        </ContentPage.BindingContext>
+
+        <ContentPage.Resources>
+            <ResourceDictionary>
+                <Color x:Key="Accent">#96d1ff</Color>
+            </ResourceDictionary>
+        </ContentPage.Resources>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="12" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="12" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="12" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="12" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="45" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Text="Connection Name" FontSize="10" Padding="5,0,0,0"/>
+            <Entry Grid.Row="1" 
+                   x:Name="Connection"
+                   Placeholder="Connection Name"
+                   BindingContext="{Binding AddUpdateConnection}"
+                   Text="{Binding ConnectionName}"
+                   Keyboard="Email" VerticalOptions="CenterAndExpand" />
+
+            <Label Grid.Row="2" Text="Address" FontSize="10" Padding="5,0,0,0"/>
+            <Entry Grid.Row="3" 
+                   x:Name="Address"
+                   BindingContext="{Binding AddUpdateConnection}"
+                   Text="{Binding IPAddress}"
+                   Placeholder="Address or URL"
+                   VerticalOptions="CenterAndExpand" />
+
+            <Label Grid.Row="4" Text="Login" FontSize="10" Padding="5,0,0,0"/>
+            <Entry Grid.Row="5" 
+                   x:Name="Login"
+                   BindingContext="{Binding AddUpdateConnection}"
+                   Text="{Binding AccessKeyName}"
+                   Placeholder="Login Name"                   
+                   VerticalOptions="CenterAndExpand" />
+
+            <Label Grid.Row="6" Text="Password" FontSize="10" Padding="5,0,0,0"/>
+            <Entry Grid.Row="7"
+                   x:Name="Password"
+                   BindingContext="{Binding AddUpdateConnection}"
+                   Text="{Binding Password}"
+                   Placeholder="Password"                    
+                   IsPassword="true"
+                   VerticalOptions="CenterAndExpand" />
+
+            <Label Grid.Row="8" 
+                   x:Name="Error" 
+                   BindingContext="{Binding AddUpdateConnection}"
+                   Text="{Binding LoginError}" 
+                   TextColor="Red" 
+                   Padding="5,0,0,0"/>
+
+            <Button Grid.Row="9"  
+                    Text="Connect" 
+                    Font="Large" 
+                    BorderWidth="1" 
+                    HorizontalOptions="Center" 
+                    VerticalOptions="CenterAndExpand"
+                    Command="{Binding AddUpdateLoginCommand}"
+                    />
+        </Grid>
+    </ContentPage>
+
+</TabbedPage>

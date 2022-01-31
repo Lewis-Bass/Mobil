@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobil.Views.ConnectPage"
+             xmlns:vm="clr-namespace:Mobil.ViewModels"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:ConnectViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15" />
+            <RowDefinition Height="45" />
+            <RowDefinition Height="15" />
+            <RowDefinition Height="45" />
+            <RowDefinition Height="15" />
+            <RowDefinition Height="45" />
+            <RowDefinition Height="15" />
+            <RowDefinition Height="45" />
+            <RowDefinition Height="45" />
+            <RowDefinition Height="45" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Text="Name" FontSize="10" Padding="5,0,0,0"/>
+        <Entry Grid.Row="1" 
+               x:Name="Connection"
+               Placeholder="Connection Name"
+               Keyboard="Email" VerticalOptions="CenterAndExpand" />
+
+        <Label Grid.Row="2" Text="Address" FontSize="10" Padding="5,0,0,0"/>
+        <Entry Grid.Row="3" 
+               x:Name="Address"
+               Placeholder="Address or URL"
+               VerticalOptions="CenterAndExpand" />
+
+        <Label Grid.Row="4" Text="Login" FontSize="10" Padding="5,0,0,0"/>
+        <Entry Grid.Row="5" 
+               x:Name="Login"
+               Placeholder="Login Name"
+               Keyboard="Email" VerticalOptions="CenterAndExpand" />
+
+        <Label Grid.Row="6" Text="Password" FontSize="10" Padding="5,0,0,0"/>
+        <Entry Grid.Row="7"
+               x:Name="Password"
+               Placeholder="Password" 
+               IsSpellCheckEnabled="false"
+               IsPassword="true"
+               Keyboard="Email" VerticalOptions="CenterAndExpand" />
+        
+        <Label Grid.Row="8" x:Name="Error" Text="" TextColor="Red" FontSize="10" Padding="5,0,0,0"/>
+
+        <Button Grid.Row="9"  
+                Text="Login" 
+                Font="Large" 
+                BorderWidth="1" 
+                HorizontalOptions="Center" 
+                VerticalOptions="CenterAndExpand"
+                Clicked ="LoginButtonClicked" />
+    </Grid>
+    <!--<StackLayout Margin="20">
+        <Label Text="Connection Name" FontSize="14" Padding="5,0,0,0"/>
+        <Entry 
+               Placeholder="Connection Name"
+               Keyboard="Email" VerticalOptions="CenterAndExpand" />
+
+        <Label Text="Address" FontSize="14" Padding="5,0,0,0"/>
+        <Entry  
+               Placeholder="Address or URL"
+               VerticalOptions="CenterAndExpand" />
+
+        <Label Text="Login" FontSize="14" Padding="5,0,0,0"/>
+        <Entry  
+               Placeholder="Login Name"
+               Keyboard="Email" VerticalOptions="CenterAndExpand" />
+
+        <Label Text="Password" FontSize="14" Padding="5,0,0,0"/>
+        <Entry  
+               Placeholder="Password" 
+               IsSpellCheckEnabled="false"
+               IsPassword="true"
+               Keyboard="Email" VerticalOptions="CenterAndExpand" />
+
+        <Button   
+                Text="Login" 
+                Font="Large" 
+                BorderWidth="1" 
+                HorizontalOptions="Center" 
+                VerticalOptions="CenterAndExpand"
+                Clicked ="LoginButtonClicked" />
+    </StackLayout>-->
+
+</ContentPage>

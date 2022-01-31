@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
+             xmlns:vm="clr-namespace:Mobil.ViewModels"  
+             xmlns:model="clr-namespace:Mobil.Models" 
+             x:Class="Mobil.Views.FavoritesPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddFavoritesCommand}"  />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+            <!--
+            x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+            https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+            -->
+            <!--<RefreshView x:DataType="vm:FavoritesViewModel" Command="{Binding LoadFavoritesCommand}" 
+                         IsRefreshing="{Binding IsBusy, Mode=TwoWay}">-->
+
+                <CollectionView x:Name="FavoriteListView"
+                                ItemsSource="{Binding Favorites}"
+                                SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout x:DataType="model:Favorite">
+                            <Grid Padding="5,5,5,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="75*"/>
+                                    <ColumnDefinition Width="25*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding FavoriteName}" 
+                                       LineBreakMode="NoWrap" 
+                                       Style="{DynamicResource ListItemTextStyle}"  />
+                                <Button Grid.Column="1" HeightRequest="30"
+                                    Text="Remove" 
+                                    Font="10"
+                                    BorderWidth="0" 
+                                    HorizontalOptions="Start" 
+                                    VerticalOptions="CenterAndExpand"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:FavoritesViewModel}}, Path=DeleteCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Grid>
+                            <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                    NumberOfTapsRequired="1"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:FavoritesViewModel}}, Path=ItemTapped}"		
+                                    CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            <!--</RefreshView>-->
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
